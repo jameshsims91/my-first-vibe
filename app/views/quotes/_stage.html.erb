@@ -1,0 +1,31 @@
+<section id="stage" class="mt-8" aria-live="polite">
+  <% if @quote %>
+    <article class="panel quote-enter p-6 sm:p-9" data-controller="clipboard">
+      <div class="flex items-center justify-between gap-4">
+        <span class="tag"><%= @quote.category_label %></span>
+        <button type="button"
+                class="ghost-btn cursor-pointer"
+                data-action="clipboard#copy"
+                aria-label="Copy quote to clipboard">
+          <span data-clipboard-target="label">Copy</span>
+        </button>
+      </div>
+
+      <blockquote class="mt-6">
+        <p class="font-display text-[clamp(1.5rem,4.4vw,2.15rem)] font-medium leading-[1.28] tracking-tight text-chrome"
+           data-clipboard-target="source">
+          <%= @quote.text %>
+        </p>
+        <footer class="mt-7 flex items-center gap-3 border-t border-white/10 pt-5">
+          <span class="h-px w-8 bg-linear-to-r from-neon to-violet" aria-hidden="true"></span>
+          <cite class="font-mono text-sm not-italic text-mist"><%= @quote.author %></cite>
+        </footer>
+      </blockquote>
+    </article>
+  <% else %>
+    <div class="panel border-dashed p-8 text-center sm:p-12">
+      <p class="font-display text-xl text-chrome">Nothing on the wire yet</p>
+      <p class="mt-2 text-sm text-mist">Tap a category above to pull your first quote.</p>
+    </div>
+  <% end %>
+</section>

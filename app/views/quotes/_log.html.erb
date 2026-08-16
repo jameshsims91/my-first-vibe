@@ -1,0 +1,31 @@
+<section id="log" class="rise rise-3 mt-14" aria-labelledby="seen-heading">
+  <div class="flex flex-wrap items-center justify-between gap-4">
+    <div>
+      <h2 id="seen-heading" class="font-display text-lg font-semibold tracking-tight text-chrome">
+        Session log
+      </h2>
+      <p class="mt-1 text-sm text-mist">
+        <%= pluralize(@seen_quotes.size, "quote") %> served in this browser session.
+      </p>
+    </div>
+
+    <% if @seen_quotes.any? %>
+      <%= button_to "Clear log", quote_history_path, method: :delete, class: "ghost-btn cursor-pointer" %>
+    <% end %>
+  </div>
+
+  <% if @seen_quotes.any? %>
+    <ol class="mt-6 space-y-3">
+      <% @seen_quotes.each do |quote| %>
+        <li class="history-row">
+          <p class="text-[0.95rem] leading-relaxed text-chrome/90"><%= quote.text %></p>
+          <p class="mt-2 font-mono text-[0.7rem] uppercase tracking-[0.14em] text-mist">
+            <%= quote.author %> <span class="text-violet">·</span> <%= quote.category_label %>
+          </p>
+        </li>
+      <% end %>
+    </ol>
+  <% else %>
+    <p class="mt-6 text-sm text-mist">Your log is empty. Generated quotes will collect here.</p>
+  <% end %>
+</section>

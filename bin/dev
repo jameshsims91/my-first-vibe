@@ -1,0 +1,22 @@
+#!/usr/bin/env sh
+
+# Default to port 3000 if not specified
+export PORT="${PORT:-3000}"
+
+# Let the debug gem allow remote connections,
+# but avoid loading until `debugger` is called
+export RUBY_DEBUG_OPEN="true"
+export RUBY_DEBUG_LAZY="true"
+
+if command -v foreman >/dev/null 2>&1; then
+  exec foreman start -f Procfile.dev "$@"
+elif gem list foreman -i --silent 2>/dev/null; then
+  exec gem exec foreman start -f Procfile.dev "$@"
+else
+  echo "foreman not found; running the Tailwind watcher alongside Rails."
+  # [always] keeps the watcher alive when stdin is not a TTY
+  bin/rails "tailwindcss:watch[always]" &
+  WATCHER_PID=$!
+  trap 'kill "$WATCHER_PID" 2>/dev/null' EXIT INT TERM
+  bin/rails server -p "$PORT"
+fi

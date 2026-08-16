@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+  <head>
+    <title><%= content_for(:title) || "QuoteForge" %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="application-name" content="QuoteForge">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#05070f">
+    <meta name="color-scheme" content="dark">
+    <meta name="description" content="Signal-grade tech, startup, and coding quotes — never the same one twice.">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= yield :head %>
+
+    <link rel="icon" href="/icon.png" type="image/png">
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/icon.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Outfit:wght@300;400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+
+  <body class="min-h-dvh font-sans antialiased">
+    <div class="stagelight" aria-hidden="true"></div>
+
+    <main class="relative z-10 mx-auto w-full max-w-3xl px-5 pb-24 pt-8 sm:px-8 sm:pt-14">
+      <% if notice.present? %>
+        <p class="panel mb-6 px-4 py-3 text-sm font-medium text-neon" role="status"><%= notice %></p>
+      <% end %>
+      <% if alert.present? %>
+        <p class="panel mb-6 px-4 py-3 text-sm font-medium text-amber" role="alert"><%= alert %></p>
+      <% end %>
+      <%= yield %>
+    </main>
+  </body>
+</html>

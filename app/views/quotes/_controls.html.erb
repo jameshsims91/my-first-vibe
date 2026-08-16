@@ -1,0 +1,29 @@
+<section id="controls" class="panel panel-glow rise rise-2 mt-10 p-5 sm:p-7">
+  <%= form_with url: quotes_path, method: :post, class: "space-y-5" do %>
+    <div class="seg" role="group" aria-label="Generate a quote by category">
+      <% @categories.each do |category| %>
+        <button type="submit"
+                name="category"
+                value="<%= category %>"
+                class="seg-option <%= "is-active" if @selected_category == category %>"
+                aria-pressed="<%= @selected_category == category %>">
+          <%= category %>
+        </button>
+      <% end %>
+    </div>
+
+    <button type="submit" name="category" value="<%= @selected_category %>" class="cta cursor-pointer">
+      Another <%= @selected_category %> quote
+    </button>
+  <% end %>
+
+  <div class="mt-6">
+    <div class="flex items-baseline justify-between font-mono text-[0.68rem] uppercase tracking-[0.16em] text-mist">
+      <span><%= @selected_category %> explored</span>
+      <span><%= @progress[:seen] %>/<%= @progress[:total] %></span>
+    </div>
+    <div class="meter mt-2" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="<%= @progress[:percent] %>" aria-label="Category progress">
+      <div class="meter-fill" style="width: <%= @progress[:percent] %>%"></div>
+    </div>
+  </div>
+</section>
